@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Dress; // ! richiamo il mio model ! //
 
+
+// use Illuminate\Support\Facades\DB; // ! mi serve questo? ! //
+
+
 class MainController extends Controller
 {
     public function index() {
@@ -13,23 +17,42 @@ class MainController extends Controller
 
 	public function products() {
 
-		// SELECT * FROM dresses
+		/**
+		 * SELECT * 
+		 * FROM dresses
+		 */ 
 		$dresses = Dress::all();
-
-		// SELECT * FROM dresses WHERE condition({col},{value})
-		// $dresses = Dress::where('fabric','!=','linen')->orderBy('size','desc')->get();
-		// $dresses = Dress::where('size',10)->get();
-		// $dresses = Dress::where('fabric','!=','linen')->groupBy('color')->orderBy('size','desc')->get();
 		
+		/**
+		 * SELECT * 
+		 * FROM dresses 
+		 * WHERE availability != 0 
+		 * ORDER BY `size` DESC
+		 */ 
+		// $dresses = Dress::where('availability','!=',0)->orderBy('size','desc')->get();
+		
+		/**
+		 * SELECT size, model, SUM(stock) as total_stock
+		 * FROM `dresses`
+		 * GROUP BY size, model
+		 * ORDER BY `size`
+		 */
+		$aggregation1 = Dress::selectRaw('size, model, sum(stock) as total_stock')
+			// ->where('availability','!=',0)
+			->groupBy('size','model')
+			->orderBy('size')
+			->get();
+	
 		// check
-		// @dump($dresses);
+		// @dump($aggregation);
 
 		$data = [
 			'dresses' => $dresses,
-			// 'selectin' => $selection
+			'aggregation1' => $aggregation1
 		];
 
 		return view('products',$data);
+
 	}
 
 	public function contacts() {
