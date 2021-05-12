@@ -5,10 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Dress; // ! richiamo il mio model ! //
 
-
-// use Illuminate\Support\Facades\DB; // ! mi serve questo? ! //
-
-
 class MainController extends Controller
 {
     public function index() {
@@ -16,6 +12,19 @@ class MainController extends Controller
 	}
 
 	public function products() {
+
+		/*
+			db: shop, table: dresses
+			--------------------------------------------
+			id 				NUMBER	INT			PK
+			model			STRING	VARCHAR(20)	NOT NULL
+			size			NUMBER	TINYINT 	NOT NULL
+			color			STRING	VARCHAR(20)	NOT NULL
+			fabric			STRING	VARCHAR(50)	NOT NULL
+			availability	BOOLEAN	TINYINT 	NOT NULL
+			stock			NUMBER	SMALLINT 	NOT NULL
+			--------------------------------------------
+		*/
 
 		/**
 		 * SELECT * 
@@ -37,18 +46,18 @@ class MainController extends Controller
 		 * GROUP BY size, model
 		 * ORDER BY `size`
 		 */
-		$aggregation1 = Dress::selectRaw('size, model, sum(stock) as total_stock')
+		$dresses_by_size_model = Dress::selectRaw('size, model, sum(stock) as total_stock')
 			// ->where('availability','!=',0)
 			->groupBy('size','model')
 			->orderBy('size')
 			->get();
 	
 		// check
-		// @dump($aggregation);
+		// @dump($dresses_by_size_model);
 
 		$data = [
 			'dresses' => $dresses,
-			'aggregation1' => $aggregation1
+			'dresses_by_size_model' => $dresses_by_size_model
 		];
 
 		return view('products',$data);

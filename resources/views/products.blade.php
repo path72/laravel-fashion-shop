@@ -40,7 +40,7 @@
 			<th>total_stock</th>
 		</thead>
 		<tbody>
-			@foreach ($aggregation1 as $dress)
+			@foreach ($dresses_by_size_model as $dress)
 				<tr>
 					<td>{{$dress->size}}</td>
 					<td>{{$dress->model}}</td>
