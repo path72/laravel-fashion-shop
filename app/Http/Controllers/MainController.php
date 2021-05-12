@@ -17,14 +17,16 @@ class MainController extends Controller
 		$dresses = Dress::all();
 
 		// SELECT * FROM dresses WHERE condition({col},{value})
-		// $dresses = Dress::where('fabric','!=','linen')->get();
+		// $dresses = Dress::where('fabric','!=','linen')->orderBy('size','desc')->get();
 		// $dresses = Dress::where('size',10)->get();
-
+		// $dresses = Dress::where('fabric','!=','linen')->groupBy('color')->orderBy('size','desc')->get();
+		
 		// check
-		@dump($dresses);
+		// @dump($dresses);
 
 		$data = [
-			'dresses' => $dresses
+			'dresses' => $dresses,
+			// 'selectin' => $selection
 		];
 
 		return view('products',$data);
