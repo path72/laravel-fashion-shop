@@ -2,5 +2,6 @@
 
 @section('title', 'Products')
 @section('main_content')
-	-products page-
+	<h3>Products</h3>
+
 @endsection

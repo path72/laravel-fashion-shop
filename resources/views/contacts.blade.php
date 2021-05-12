@@ -2,5 +2,5 @@
 
 @section('title', 'Contacts')
 @section('main_content')
-	-contacts page-
+	<h3>Contacts</h3>
 @endsection

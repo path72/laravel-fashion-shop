@@ -18,8 +18,6 @@ Route::get('/', 'MainController@index')->name('home');
 Route::get('/products', 'MainController@products')->name('products');
 Route::get('/contacts', 'MainController@contacts')->name('contacts');
 
-
-
 // Route::get('/', function () {
 //     return view('home');
 // });
