@@ -54,25 +54,41 @@
 	</table>	
 
 
-{{-- array of objects --}}
-@dump($dresses_by_size_model)
 @php
-	// object (App\Dress)
-	$item = $dresses_by_size_model->first();
+	
+	// MODEL = ELOQUENT'S OBJECT
 
-	// array
-	$array = $item->toArray();
+	/**
+	 * toArray()
+	 * convert a model and its loaded relationships to an array
+	 */
+	// model as array of array
+	$dresses_by_size_model_array = $dresses_by_size_model->toArray();
 
-	//
-	// $coll = collection($array);
+	// model of single item
+	$item_model = $dresses_by_size_model->first();
 
-	// array of keys
-	$attributes = array_keys($array);
+	// array of model's properties (just the properties I need!) 
+	$properties_array = $item_model->toArray();
+
+	// array of keys 
+	$keys_array = array_keys($properties_array);
 
 @endphp
-@dump($item)
-@dump($array)
-@dump($attributes)
 
+model (eloquent's object): dresses_by_size_model
+@dump($dresses_by_size_model)
+
+model as array of array: dresses_by_size_model_array = $dresses_by_size_model->toArray();
+@dump($dresses_by_size_model_array)
+
+model of single item: $item_model = $dresses_by_size_model->first();
+@dump($item_model)
+
+array of single item model's properties: $properties_array = $item_model->toArray();
+@dump($properties_array)
+
+array of keys of single item model's properties: $keys_array = array_keys($properties_array);
+@dump($keys_array)
 
 @endsection
