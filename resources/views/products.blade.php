@@ -34,20 +34,45 @@
 
 	<h4>Dresses by Size and Model</h4>
 	<table>
+		@php
+			$keys = array_keys($dresses_by_size_model->first()->toArray());
+		@endphp
 		<thead>
-			<th>size</th>
-			<th>model</th>
-			<th>total_stock</th>
+			@foreach ($keys as $key)
+				<th>{{$key}}</th>
+			@endforeach
 		</thead>
 		<tbody>
 			@foreach ($dresses_by_size_model as $dress)
 				<tr>
-					<td>{{$dress->size}}</td>
-					<td>{{$dress->model}}</td>
-					<td>{{$dress->total_stock}}</td>
+					@foreach ($keys as $key)
+					<td>{{$dress->$key}}</td>
+					@endforeach
 				</tr>
 			@endforeach
 		</tbody>
 	</table>	
+
+
+{{-- array of objects --}}
+@dump($dresses_by_size_model)
+@php
+	// object (App\Dress)
+	$item = $dresses_by_size_model->first();
+
+	// array
+	$array = $item->toArray();
+
+	//
+	// $coll = collection($array);
+
+	// array of keys
+	$attributes = array_keys($array);
+
+@endphp
+@dump($item)
+@dump($array)
+@dump($attributes)
+
 
 @endsection
